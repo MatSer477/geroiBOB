@@ -1,798 +1,486 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Портреты и биографии героев Великой Отечественной войны, связанных с Саратовом и Саратовской областью.">
-<title>Герои ВОВ | Саратовская область</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Учебный исторический проект Сергея Каменнова, 8А класс. Биографии 32 полных кавалеров ордена Славы.">
+<title>Полные кавалеры ордена Славы — Саратовская область</title>
 <style>
 :root {
-    --green: #243e30;
-    --green2: #365944;
-    --gold: #d7b66c;
-    --paper: #f5f1e8;
-    --white: #fff;
-    --text: #292f29;
+  --bg:#f4f0e7;
+  --paper:#fffdf8;
+  --ink:#262a30;
+  --muted:#646b73;
+  --red:#8f2929;
+  --gold:#c59b4b;
+  --line:#e2d8c8;
 }
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    scroll-behavior: smooth;
-}
-
+* { box-sizing:border-box; }
 body {
-    font-family: Arial, sans-serif;
-    background: var(--paper);
-    color: var(--text);
-    line-height: 1.7;
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Georgia,"Times New Roman",serif;
+  line-height:1.65;
 }
-
 header {
-    background: var(--green);
-    color: white;
-    padding: 18px 6%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
+  background:linear-gradient(135deg,#292d34,#4b3030);
+  color:#fff;
+  padding:42px 20px 36px;
+  border-bottom:5px solid var(--gold);
 }
-
-.logo {
-    font-size: 22px;
-    font-weight: bold;
-    color: var(--gold);
+.head-inner,main,footer {
+  max-width:1180px;
+  margin:auto;
 }
-
-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 18px;
+.kicker {
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:#e8ca8a;
+  font:700 .78rem Arial,sans-serif;
 }
-
-nav a {
-    color: white;
-    text-decoration: none;
+h1 {
+  font-size:clamp(2rem,5vw,3.5rem);
+  line-height:1.12;
+  margin:.5rem 0 1rem;
 }
-
-nav a:hover {
-    color: var(--gold);
+.subtitle {
+  font-size:1.12rem;
+  max-width:800px;
+  color:#f0e9e0;
 }
-
-.hero {
-    padding: 90px 7%;
-    color: white;
-    background: linear-gradient(125deg, #14271c, #4b6750);
+.byline {
+  display:inline-block;
+  margin-top:14px;
+  padding:8px 12px;
+  border:1px solid #bba078;
+  border-radius:6px;
+  color:#fff6e7;
+  font-family:Arial,sans-serif;
 }
-
-.hero-inner {
-    max-width: 900px;
+main { padding:28px 18px 48px; }
+.intro,.notes {
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:22px;
+  margin-bottom:24px;
+  box-shadow:0 4px 18px #3023130a;
 }
-
-.hero-label {
-    color: var(--gold);
-    font-weight: bold;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+.toolbar {
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin:24px 0;
+  align-items:center;
 }
-
-.hero h1 {
-    font-size: clamp(36px, 6vw, 62px);
-    line-height: 1.15;
-    margin: 22px 0;
+#search {
+  flex:1;
+  min-width:230px;
+  padding:13px 15px;
+  border:1px solid #c8bca9;
+  border-radius:8px;
+  font:1rem Arial,sans-serif;
+  background:white;
 }
-
-.hero p {
-    font-size: 18px;
-    max-width: 760px;
-    margin-bottom: 28px;
-}
-
-.button {
-    display: inline-block;
-    background: var(--gold);
-    color: #1e3024;
-    border: none;
-    border-radius: 5px;
-    padding: 12px 20px;
-    text-decoration: none;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 15px;
-}
-
-.button:hover {
-    background: #f2dfac;
-}
-
-section {
-    padding: 60px 7%;
-}
-
-.section-title {
-    font-size: 34px;
-    color: var(--green);
-    margin-bottom: 12px;
-}
-
-.line {
-    width: 70px;
-    height: 4px;
-    background: var(--gold);
-    margin: 18px 0 25px;
-}
-
-.intro {
-    background: white;
-}
-
-.intro p {
-    max-width: 900px;
-}
-
-.intro-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    margin-top: 30px;
-}
-
-.intro-card {
-    padding: 22px;
-    background: var(--paper);
-    border-left: 4px solid var(--gold);
-}
-
-.intro-card h3 {
-    color: var(--green);
-    margin-bottom: 8px;
-}
-
-.heroes-section {
-    background: #eae5d9;
-}
-
-.description {
-    color: #62665f;
-    max-width: 850px;
-    margin-bottom: 25px;
-}
-
-.search-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 30px;
-}
-
-.search {
-    width: 100%;
-    max-width: 480px;
-    padding: 14px;
-    border: 1px solid #c6c0b3;
-    border-radius: 5px;
-    background: white;
-    font-size: 16px;
-}
-
 .count {
-    margin-bottom: 20px;
-    color: #686b62;
+  font:700 .95rem Arial,sans-serif;
+  color:var(--muted);
 }
-
-.heroes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-    gap: 25px;
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));
+  gap:20px;
 }
-
 .hero-card {
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 5px 18px #00000012;
-    display: flex;
-    flex-direction: column;
-    transition: transform .2s;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 5px 18px #3023130c;
+  display:flex;
+  flex-direction:column;
 }
-
-.hero-card:hover {
-    transform: translateY(-4px);
+.hero-card[hidden] { display:none; }
+.portrait-wrap {
+  background:#e7dfd1;
+  min-height:210px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
 }
-
-.photo-wrap {
-    height: 300px;
-    background: #ded9cc;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+.portrait {
+  width:100%;
+  height:260px;
+  object-fit:contain;
+  display:block;
 }
-
-.photo-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 8px;
+.photo-note {
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#211d1bbd;
+  color:white;
+  padding:5px 10px;
+  font:.75rem Arial,sans-serif;
 }
-
-.photo-placeholder {
-    display: none;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    color: var(--green);
-    padding: 20px;
-    background: linear-gradient(145deg, #ded9cc, #c8c2b2);
+.hero-body { padding:18px 20px 22px; }
+.number {
+  font:700 .78rem Arial,sans-serif;
+  letter-spacing:.08em;
+  color:var(--red);
+  text-transform:uppercase;
 }
-
-.photo-placeholder span {
-    font-size: 64px;
-    margin-bottom: 10px;
+h2 {
+  font-size:1.35rem;
+  line-height:1.25;
+  margin:8px 0 12px;
 }
-
-.card-content {
-    padding: 22px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    flex: 1;
+.hero-body p { margin:.5rem 0; }
+.photo-status {
+  font:.8rem Arial,sans-serif;
+  color:var(--muted);
+  border-top:1px solid var(--line);
+  padding-top:10px;
+  margin-top:14px!important;
 }
-
-.tag {
-    color: #7a612d;
-    background: #f5edd8;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 4px 9px;
-    margin-bottom: 12px;
-    border-radius: 3px;
+a {
+  color:#7a2525;
+  overflow-wrap:anywhere;
 }
-
-.hero-card h3 {
-    color: var(--green);
-    font-size: 23px;
-    line-height: 1.35;
-    margin-bottom: 8px;
-}
-
-.years {
-    font-weight: bold;
-    color: #777;
-    margin-bottom: 12px;
-}
-
-.card-content > p {
-    margin-bottom: 15px;
-}
-
-.card-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: auto;
-    padding-top: 12px;
-}
-
-.secondary {
-    background: var(--green);
-    color: white;
-}
-
-.secondary:hover {
-    background: var(--green2);
-}
-
-.biography {
-    display: none;
-    border-top: 1px solid #ddd8cc;
-    margin-top: 18px;
-    padding-top: 16px;
-    width: 100%;
-}
-
-.biography.open {
-    display: block;
-}
-
-.biography p {
-    margin-bottom: 13px;
-}
-
-.source-link {
-    color: #315b41;
-    overflow-wrap: anywhere;
-}
-
-.no-results {
-    display: none;
-    padding: 25px 0;
-}
-
-.history {
-    background: white;
-}
-
-.history-item {
-    border-left: 3px solid var(--gold);
-    padding: 0 0 25px 22px;
-    margin: 25px 0;
-}
-
-.history-item h3 {
-    color: var(--green);
-    margin-bottom: 5px;
-}
-
-.memory {
-    background: var(--green);
-    color: white;
-    text-align: center;
-}
-
-.memory h2 {
-    color: var(--gold);
-}
-
-.memory blockquote {
-    max-width: 750px;
-    margin: 20px auto;
-    font-size: 25px;
-    font-style: italic;
-}
-
-.memory p {
-    max-width: 750px;
-    margin: auto;
-}
-
+.source-list li { margin:.65rem 0; }
+.small-note { font-size:.94rem; color:var(--muted); }
 footer {
-    background: #17261d;
-    color: #ddd;
-    text-align: center;
-    padding: 30px 6%;
+  padding:0 18px 32px;
+  color:var(--muted);
+  font:.9rem Arial,sans-serif;
 }
-
-footer a {
-    color: var(--gold);
-}
-
-footer p + p {
-    margin-top: 8px;
-    font-size: 14px;
-}
-
-@media (max-width: 600px) {
-    header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    nav {
-        gap: 12px;
-    }
-
-    section {
-        padding: 42px 5%;
-    }
-
-    .hero {
-        padding: 65px 5%;
-    }
-
-    .section-title {
-        font-size: 28px;
-    }
-
-    .photo-wrap {
-        height: 270px;
-    }
+@media(max-width:520px) {
+  header { padding:30px 18px; }
+  .hero-body { padding:16px; }
+  .portrait { height:230px; }
 }
 </style>
 </head>
 
 <body>
-
 <header>
-    <div class="logo">★ Память поколений</div>
-    <nav>
-        <a href="#about">О проекте</a>
-        <a href="#heroes">Герои</a>
-        <a href="#history">История</a>
-        <a href="#memory">Память</a>
-    </nav>
+  <div class="head-inner">
+    <div class="kicker">Учебный исторический проект</div>
+    <h1>Полные кавалеры ордена Славы</h1>
+    <div class="subtitle">
+      Биографии 32 героев, связанных с Саратовом и Саратовской областью
+    </div>
+    <div class="byline">Автор проекта: Сергей Каменнов, 8А класс</div>
+  </div>
 </header>
 
 <main>
-
-<section class="hero">
-    <div class="hero-inner">
-        <div class="hero-label">1941–1945 · Саратовский край</div>
-        <h1>Герои Великой Отечественной войны</h1>
-        <div class="line"></div>
-        <p>
-            Портреты, биографии и подвиги людей, которые сражались
-            за свободу Родины. Сохраняем память о героях,
-            чьи судьбы связаны с Саратовом и Саратовской областью.
-        </p>
-        <a class="button" href="#heroes">Познакомиться с героями</a>
-    </div>
-</section>
-
-<section class="intro" id="about">
-    <h2 class="section-title">О проекте</h2>
-    <div class="line"></div>
+  <section class="intro">
+    <h2>О проекте</h2>
     <p>
-        Саратовская земля связана с судьбами многих участников
-        Великой Отечественной войны. Одни родились в Саратове
-        и районах области, другие учились, работали или проходили
-        военную подготовку на нашей земле.
+      Проект посвящён полным кавалерам ордена Славы — военнослужащим,
+      удостоенным всех трёх степеней этой награды за личное мужество
+      и боевые заслуги в годы Великой Отечественной войны. В каталоге
+      представлены краткие биографические очерки 32 человек, чьи судьбы
+      связаны с Саратовом и Саратовской областью.
     </p>
-    <p style="margin-top:14px">
-        На этой странице размещены биографические карточки,
-        а также ссылки на архивный источник для проверки
-        и дальнейшего изучения истории.
+    <p class="small-note">
+      Биографические сведения приведены в краткой форме. В тех случаях,
+      где доступные материалы не содержат всех подробностей, очерки
+      не заменяют полные архивные биографии. Фотографии следует сверять
+      с персональными карточками героев.
     </p>
+  </section>
 
-    <div class="intro-grid">
-        <div class="intro-card">
-            <h3>Фотографии</h3>
-            <p>Портреты героев. Если внешний адрес изображения недоступен, карточка покажет аккуратную заглушку.</p>
-        </div>
-        <div class="intro-card">
-            <h3>Биографии</h3>
-            <p>Истории жизни, военная служба и подвиги защитников Родины.</p>
-        </div>
-        <div class="intro-card">
-            <h3>Поиск</h3>
-            <p>Найди нужную карточку по имени, фамилии или месту рождения.</p>
-        </div>
-    </div>
-</section>
+  <div class="toolbar">
+    <input
+      id="search"
+      type="search"
+      placeholder="Найти героя по ФИО или тексту биографии…"
+      aria-label="Поиск по героям"
+    >
+    <span class="count" id="count">32 биографии</span>
+  </div>
 
-<section class="heroes-section" id="heroes">
-    <h2 class="section-title">Герои и их биографии</h2>
-    <div class="line"></div>
-    <p class="description">
-        Нажми «Читать биографию», чтобы открыть подробности.
-        Для проверки сведений используй ссылку на архивный источник.
-    </p>
+  <section class="grid" id="heroes"></section>
 
-    <div class="search-row">
-        <input
-            class="search"
-            id="search"
-            type="search"
-            placeholder="Поиск по имени или фамилии..."
-            aria-label="Поиск героев"
-        >
-    </div>
-
-    <p class="count" id="count">Героев на странице: 4</p>
-
-    <div class="heroes-grid" id="heroesGrid">
-
-        <article class="hero-card" data-search="алексей петрович маресьев камышин летчик авиация">
-            <div class="photo-wrap">
-                <img
-                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Маресьев,_Алексей_Петрович_001.png"
-                    alt="Портрет Алексея Петровича Маресьева"
-                    loading="lazy"
-                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-                >
-                <div class="photo-placeholder">
-                    <span>★</span>
-                    <b>Алексей Петрович Маресьев</b>
-                    <small>Портрет временно недоступен</small>
-                </div>
-            </div>
-            <div class="card-content">
-                <span class="tag">Герой Советского Союза</span>
-                <h3>Алексей Петрович Маресьев</h3>
-                <div class="years">1916–2001</div>
-                <p>Лётчик-истребитель, уроженец Камышина, пример мужества и невероятной силы воли.</p>
-                <div class="card-actions">
-                    <button class="button" onclick="toggleBiography(this)" aria-expanded="false">Читать биографию</button>
-                    <a class="button secondary" href="https://www.saratov-geroi.ru/" target="_blank" rel="noopener">Архив</a>
-                </div>
-                <div class="biography">
-                    <p>
-                        Алексей Маресьев родился 20 мая 1916 года
-                        в Камышине Саратовской губернии. Он мечтал
-                        стать лётчиком и впоследствии окончил
-                        военное авиационное училище.
-                    </p>
-                    <p>
-                        В апреле 1942 года во время боевого вылета
-                        его самолёт был подбит. Получив тяжёлые
-                        ранения, он добирался к своим через лес.
-                        В результате повреждений ему ампутировали
-                        обе ноги.
-                    </p>
-                    <p>
-                        Маресьев освоил протезы, восстановил
-                        лётные навыки и вернулся в боевую авиацию.
-                        В 1943 году ему присвоили звание Героя
-                        Советского Союза.
-                    </p>
-                    <p>
-                        Его судьба стала основой книги Бориса
-                        Полевого «Повесть о настоящем человеке».
-                    </p>
-                    <p class="source-link">
-                        Источник для дальнейшей проверки:
-                        <a class="source-link" href="https://www.saratov-geroi.ru/" target="_blank" rel="noopener">сайт саратовских героев</a>.
-                    </p>
-                </div>
-            </div>
-        </article>
-
-        <article class="hero-card" data-search="виктор васильевич талалихин тепловка вольский район летчик">
-            <div class="photo-wrap">
-                <img
-                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Victor_Talalihkin.jpg"
-                    alt="Портрет Виктора Васильевича Талалихина"
-                    loading="lazy"
-                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-                >
-                <div class="photo-placeholder">
-                    <span>★</span>
-                    <b>Виктор Васильевич Талалихин</b>
-                    <small>Портрет временно недоступен</small>
-                </div>
-            </div>
-            <div class="card-content">
-                <span class="tag">Герой Советского Союза</span>
-                <h3>Виктор Васильевич Талалихин</h3>
-                <div class="years">1918–1941</div>
-                <p>Военный лётчик, прославившийся воздушным тараном во время обороны Москвы.</p>
-                <div class="card-actions">
-                    <button class="button" onclick="toggleBiography(this)" aria-expanded="false">Читать биографию</button>
-                    <a class="button secondary" href="https://www.saratov-geroi.ru/" target="_blank" rel="noopener">Архив</a>
-                </div>
-                <div class="biography">
-                    <p>
-                        Виктор Талалихин родился 18 сентября 1918 года
-                        в селе Тепловка Саратовской губернии.
-                        Он занимался в аэроклубе, затем окончил
-                        авиационное училище и стал военным лётчиком.
-                    </p>
-                    <p>
-                        В ночь на 7 августа 1941 года Талалихин
-                        совершил ночной воздушный таран немецкого
-                        бомбардировщика над Москвой. Он покинул
-                        повреждённый самолёт с парашютом и выжил.
-                    </p>
-                    <p>
-                        8 августа 1941 года ему присвоили звание
-                        Героя Советского Союза. Виктор Талалихин
-                        погиб в воздушном бою 27 октября 1941 года.
-                    </p>
-                    <p class="source-link">
-                        Источник для дальнейшей проверки:
-                        <a class="source-link" href="https://www.saratov-geroi.ru/" target="_blank" rel="noopener">сайт саратовских героев</a>.
-                    </p>
-                </div>
-            </div>
-        </article>
-
-        <article class="hero-card" data-search="николай михайлович скоморохов лапоть летчик истребитель">
-            <div class="photo-wrap">
-                <img
-                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Nikolai_Skomorokhov.jpg"
-                    alt="Портрет Николая Михайловича Скоморохова"
-                    loading="lazy"
-                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-                >
-                <div class="photo-placeholder">
-                    <span>★</span>
-                    <b>Николай Михайлович Скоморохов</b>
-                    <small>Портрет временно недоступен</small>
-                </div>
-            </div>
-            <div class="card-content">
-                <span class="tag">Дважды Герой Советского Союза</span>
-                <h3>Николай Михайлович Скоморохов</h3>
-                <div class="years">1920–1994</div>
-                <p>Советский лётчик-истребитель, участник многочисленных воздушных боёв.</p>
-                <div class="card-actions">
-                    <button class="button" onclick="toggleBiography(this)" aria-expanded="false">Читать биографию</button>
-                    <a class="button secondary" href="https://www.saratov-geroi.ru/" target="_blank" rel="noopener">Архив</a>
-                </div>
-                <div class="biography">
-                    <p>
-                        Николай Скоморохов родился в 1920 году
-                        в Саратовской губернии. Он стал лётчиком
-                        истребительной авиации и участвовал в
-                        боевых действиях на фронте.
-                    </p>
-                    <p>
-                        В ходе войны он проявил себя как опытный
-                        пилот, участвовал во многих воздушных боях
-                        и получил высокие государственные награды.
-                    </p>
-                    <p>
-                        Скоморохов был дважды удостоен звания
-                        Героя Советского Союза. После войны
-                        продолжил службу и занимался подготовкой
-                        военных кадров.
-                    </p>
-                    <p class="source-link">
-                        Дополнительные сведения:
-                        <a class="source-link" href="https://www.saratov-geroi.ru/" target="_blank" rel="noopener">сайт саратовских героев</a>.
-                    </p>
-                </div>
-            </div>
-        </article>
-
-        <article class="hero-card" data-search="федор дмитриевич глухов александров гай сержант пулеметчик">
-            <div class="photo-wrap">
-                <img
-                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Fedor_Glukhov.jpg"
-                    alt="Портрет Фёдора Дмитриевича Глухова"
-                    loading="lazy"
-                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-                >
-                <div class="photo-placeholder">
-                    <span>★</span>
-                    <b>Фёдор Дмитриевич Глухов</b>
-                    <small>Портрет временно недоступен</small>
-                </div>
-            </div>
-            <div class="card-content">
-                <span class="tag">Герой Советского Союза</span>
-                <h3>Фёдор Дмитриевич Глухов</h3>
-                <div class="years">1906–1943</div>
-                <p>Гвардии сержант, командир пулемётного расчёта, уроженец Александрова Гая.</p>
-                <div class="card-actions">
-                    <button class="button" onclick="toggleBiography(this)" aria-expanded="false">Читать биографию</button>
-                    <a class="button secondary" href="https://saratov-geroi.ru/stats_prosm.php?ist=9&ur=1" target="_blank" rel="noopener">Архив</a>
-                </div>
-                <div class="biography">
-                    <p>
-                        Фёдор Дмитриевич Глухов родился в 1906 году
-                        в селе Александров Гай Саратовской области.
-                        Он служил в Красной армии и участвовал
-                        в боях Великой Отечественной войны.
-                    </p>
-                    <p>
-                        Глухов был гвардии сержантом и командиром
-                        пулемётного расчёта 184-го гвардейского
-                        стрелкового полка 62-й гвардейской
-                        стрелковой дивизии.
-                    </p>
-                    <p>
-                        Он погиб 6 октября 1943 года.
-                        В архивном каталоге Саратовской области
-                        он представлен среди Героев Советского Союза.
-                    </p>
-                    <p class="source-link">
-                        Архивная категория:
-                        <a class="source-link" href="https://saratov-geroi.ru/stats_prosm.php?ist=9&ur=1" target="_blank" rel="noopener">уроженцы Саратовской области</a>.
-                    </p>
-                </div>
-            </div>
-        </article>
-
-    </div>
-
-    <p class="no-results" id="noResults">По вашему запросу героев не найдено.</p>
-
-    <p class="description" style="margin-top:30px">
-        Это начальная подборка, а не полный список архива. Биографии
-        и изображения следует сверять с архивными записями перед
-        публикацией исторического проекта.
-    </p>
-</section>
-
-<section class="history" id="history">
-    <h2 class="section-title">Саратовская область в годы войны</h2>
-    <div class="line"></div>
-
-    <div class="history-item">
-        <h3>1941 год — начало войны</h3>
-        <p>
-            Жители региона уходили на фронт, предприятия
-            перестраивались на военные нужды, а город принимал
-            эвакуированных и помогал армии.
-        </p>
-    </div>
-
-    <div class="history-item">
-        <h3>1942–1943 годы — помощь фронту</h3>
-        <p>
-            Саратов был важным тыловым центром. Здесь работали
-            госпитали, производились необходимые фронту товары,
-            оказывалась помощь раненым.
-        </p>
-    </div>
-
-    <div class="history-item">
-        <h3>9 мая 1945 года — Великая Победа</h3>
-        <p>
-            Победа стала результатом мужества фронтовиков,
-            самоотверженности тружеников тыла и усилий всего народа.
-        </p>
-    </div>
-</section>
-
-<section class="memory" id="memory">
-    <h2>Никто не забыт, ничто не забыто</h2>
-    <blockquote>
-        «Память о героях живёт, пока мы рассказываем их истории».
-    </blockquote>
+  <section class="notes" style="margin-top:28px">
+    <h2>Источники и примечания</h2>
+    <ol class="source-list">
+      <li>
+        «Книга памяти Саратовской области», раздел
+        «Полные кавалеры ордена Славы»:
+        <a href="https://xn--64-6kcan3adlwfz2bym.xn--p1ai/heroes/?HERO_TYPE=520309"
+           target="_blank" rel="noopener noreferrer">открыть раздел</a>.
+      </li>
+      <li>
+        Общественная палата Саратовской области,
+        «Полные кавалеры ордена Славы. Земляки»,
+        22 января 2020 года:
+        <a href="https://xn--64-emce.xn--p1ai/новости/2020/01/22/полные-кавалеры-ордена-славы-земляки/"
+           target="_blank" rel="noopener noreferrer">открыть публикацию</a>.
+      </li>
+      <li>
+        «Герои страны» — биографические справки:
+        <a href="https://www.warheroes.ru/"
+           target="_blank" rel="noopener noreferrer">warheroes.ru</a>.
+      </li>
+      <li>
+        Wikimedia Commons — каталог изображений:
+        <a href="https://commons.wikimedia.org/"
+           target="_blank" rel="noopener noreferrer">commons.wikimedia.org</a>.
+        Соответствие фотографии конкретному герою необходимо проверить.
+      </li>
+    </ol>
     <p>
-        Изучай историю своей области, береги семейные архивы
-        и передавай память о защитниках Родины следующим поколениям.
+      <strong>Примечание.</strong>
+      В очерках № 16–24 и № 27–32 оставлены сжатые формулировки там,
+      где в ходе подготовки не удалось независимо проверить все детали.
+      Они не заменяют архивную биографию. Для окончательной версии доклада
+      рекомендуется дополнить их данными из персональных карточек
+      и наградных документов.
     </p>
-</section>
-
+  </section>
 </main>
 
 <footer>
-    <p>Память поколений — Саратов и Саратовская область</p>
-    <p>
-        Архивный источник:
-        <a href="https://www.saratov-geroi.ru/" target="_blank" rel="noopener">
-            saratov-geroi.ru
-        </a>
-    </p>
-    <p>Учебный исторический проект</p>
+  Учебный исторический проект · Сергей Каменнов, 8А класс
 </footer>
 
 <script>
-function toggleBiography(button) {
-    const biography = button
-        .closest(".card-content")
-        .querySelector(".biography");
+const heroes = [
+  {
+    name: "Байкин Алексей Романович (1922–1997)",
+    bio: "Родился 27 марта 1922 года в селе Репное, ныне Балашовского района Саратовской области. До войны работал в колхозе; в Красную армию был призван в декабре 1941 года, на фронте находился с января 1942-го. Служил командиром миномётного расчёта 173-го стрелкового полка. Отличился при прорыве обороны противника в Карелии и в боях в Польше и Восточной Пруссии: его расчёт подавлял огневые точки, прокладывал проходы в заграждениях и поддерживал наступление пехоты. После демобилизации вернулся в Саратовскую область и работал в колхозе и на предприятиях Балашова. Полный кавалер ордена Славы; умер 30 марта 1997 года."
+  },
+  {
+    name: "Безбородов Михаил Никифорович (1925–1993)",
+    bio: "Родился 11 октября 1925 года в селе Сосновка, ныне Татищевского района Саратовской области. До призыва работал токарем на оборонном заводе в Саратове. В Красной армии с июля 1943 года, на фронте с августа 1944-го; служил автоматчиком в гвардейском воздушно-десантном полку. В боях в Словакии и Польше отражал контратаки, участвовал в захвате траншей и подавлении огневых точек. После войны работал монтажником в организации «Волгоэлектромонтаж», жил в Саратове. В 1956 году получил орден Славы I степени после пересмотра прежнего награждения и стал полным кавалером. Умер 9 июня 1993 года."
+  },
+  {
+    name: "Беспалов Ефим Петрович (1910–1996)",
+    bio: "Родился 14 октября 1910 года в селе Андреевка Екатериновского района Саратовской области. Окончил начальную школу, работал на строительстве и в коммунальном хозяйстве, а в июне 1942 года был призван в Красную армию. С августа 1942 года воевал в расчёте 45-мм пушки 364-го стрелкового полка. В боях в Белоруссии и Польше уничтожал пулемётные точки, бронетранспортёры и другие огневые средства противника; в январе 1945 года подавил четыре пулемётные точки. После войны жил в Саратове и работал экспедитором и заведующим хозяйством в областной больнице. Умер 31 января 1996 года, похоронен на Увекском кладбище."
+  },
+  {
+    name: "Боганов Борис Петрович (1914–1984)",
+    bio: "Родился 25 июля 1914 года в селе Черкасское, ныне Вольского района Саратовской области. До войны работал в сельсовете, затем в финансовом отделе Краснодарского края. В действующей армии с сентября 1941 года; служил в стрелковых частях, был старшиной и помощником командира взвода. В 1944 году отличился при овладении высотой севернее Ясс, а в 1945 году — при доставке боеприпасов и боях в Польше и Германии. В апреле 1945 года, будучи раненым, продолжал выполнять задачу в бою за Кодерсдорф. После демобилизации работал финансовым инспектором и бухгалтером в Краснодарском крае. Умер 19 ноября 1984 года."
+  },
+  {
+    name: "Бушкин Пётр Иванович (1915–2000)",
+    bio: "Родился 10 июля 1915 года в селе Малый Мелик, ныне Балашовского района Саратовской области. До войны руководил полеводческой бригадой в колхозе. В Красную армию призван в августе 1942 года, на фронте с сентября того же года. Командовал миномётным расчётом 246-го гвардейского стрелкового полка. В боях на Украине подавлял пулемёты и укрепления противника; в январе 1945 года его расчёт уничтожил огневые точки и солдат противника в районе польского населённого пункта Сельце. В боях на подступах к Берлину расчёт вывел из строя миномёты, пулемёты и транспорт противника. После войны вернулся в родное село и работал в колхозе. Умер 4 июля 2000 года."
+  },
+  {
+    name: "Власов Владимир Емельянович (1920–1995)",
+    bio: "Родился 16 июля 1920 года в Хвалынске Саратовской области. Вскоре семья переехала в Рославль Смоленской области; там он окончил школу и железнодорожный техникум, работал инструктором физкультуры. В армии с 1940 года, служил в артиллерии и участвовал в войне с июня 1941 года. Был артиллерийским разведчиком: выявлял позиции противника, обеспечивал корректировку огня и продолжал выполнять задачи после ранений. Отличился в боях в 1944–1945 годах, за что получил три степени ордена Славы. После демобилизации жил в Бресте, руководил областным Домом физкультуры и работал в спортивном манеже, воспитал спортсменов-боксёров. Умер 17 июля 1995 года."
+  },
+  {
+    name: "Волков Александр Михайлович (1921–1998)",
+    bio: "Родился 9 октября 1921 года в Саратове в рабочей семье. До призыва работал драпировщиком-обойщиком. В Красную армию призван в 1941 году, на фронте с июля 1943-го; служил наводчиком орудия танка в гвардейской танковой бригаде. Участвовал в боях за Львов, в наступлении на территории Польши и в боях у реки Нейсе. В составе танкового экипажа поражал огневые точки, транспорт, бронетехнику и живую силу противника. После демобилизации поселился в Ленинграде и работал в театре драпировщиком-обойщиком. Умер 17 сентября 1998 года в Санкт-Петербурге."
+  },
+  {
+    name: "Волков Михаил Семёнович (1924–1986)",
+    bio: "Родился 15 ноября 1924 года в Балакове Саратовской области. Работал трактористом в селе Натальино. В октябре 1942 года был призван в Красную армию; воевал на Ленинградском и 2-м Белорусском фронтах, служил наводчиком 45-мм противотанкового орудия. В боях под Гдовом подавлял огневые точки, а при наступлении в Эстонии и Польше поддерживал пехоту прямой наводкой и помогал эвакуировать раненых. В марте 1945 года получил тяжёлое ранение. После войны работал трактористом в совхозе, позднее слесарем автопарка в Балакове. Умер 26 августа 1986 года."
+  },
+  {
+    name: "Гурьянов Пётр Иванович (1912–1997)",
+    bio: "Родился 2 мая 1912 года в деревне Болтуновка, ныне Хвалынского района Саратовской области. До войны работал на строительстве Сталинградского тракторного завода, ранее проходил срочную службу. На фронте с ноября 1941 года, служил санинструктором. В боях под Ленинградом и в наступлении в Прибалтике выносил раненых с поля боя и оказывал им первую помощь; в январе 1945 года эвакуировал более ста раненых. Его наградили тремя степенями ордена Славы за мужество и спасение бойцов. После войны работал на тракторном заводе, жил в Волгограде и Волжском. Умер 2 июля 1997 года."
+  },
+  {
+    name: "Доценко Александр Данилович (1917–1986)",
+    bio: "Родился 1 апреля 1917 года в селе Камышево Дергачёвского района Саратовской области. После школы работал строгальщиком на крановом заводе в Урюпинске. До Великой Отечественной войны участвовал в боях на Халхин-Голе в 1939 году. На фронтах Великой Отечественной войны с октября 1941 года, служил командиром артиллерийского расчёта. Отличился при прорыве обороны противника в Украине и Польше, а в апреле 1945 года — в боях в Берлине. После демобилизации вернулся на завод в Урюпинске. Умер 22 января 1986 года."
+  },
+  {
+    name: "Иванов Евдоким Арсентьевич",
+    bio: "Родился 15 июня 1909 года в селе Черкасское, ныне Вольского района Саратовской области. Работал в колхозе, затем слесарем на заводе в Сталинграде. В Красную армию повторно призван в июне 1941 года; на фронте с сентября 1943-го. Служил командиром артиллерийского орудия, поддерживал пехоту прямой наводкой в боях под Ленинградом и в Прибалтике. За уничтожение огневых точек и техники противника награждён тремя степенями ордена Славы. После войны жил и работал в Сталинграде/Волгограде. Умер в 1990 году."
+  },
+  {
+    name: "Казаков Василий Александрович",
+    bio: "Родился 2 марта 1924 года в селе Богородское Вольского района Саратовской области. До войны работал в колхозе; в Красной армии с 1942 года, на фронте с августа того же года. Командовал артиллерийским расчётом. В боях в Белоруссии, Польше и Германии подавлял огневые точки и миномётные батареи, поражал транспорт и бронетехнику. В мае 1945 года его батарея отражала контратаки противника при выходе к Эльбе. После демобилизации вернулся в родное село и работал в колхозе. Умер 8 сентября 2005 года."
+  },
+  {
+    name: "Кликушин Александр Павлович",
+    bio: "Родился 23 ноября 1918 года в селе Леляевка, ныне Новобурасского района Саратовской области. Работал трактористом в колхозе, в Красную армию призван в 1940 году. Воевал с сентября 1942 года, служил артиллеристом; неоднократно был ранен. Отличился в боях на Украине, при удержании плацдарма на Днестре, при расширении плацдарма на Висле и в уличных боях в Берлине. После войны вернулся в родное село и работал в колхозе. Его именем названа местная школа; умер 6 декабря 1978 года."
+  },
+  {
+    name: "Корольков Николай Петрович",
+    bio: "Родился 4 апреля 1911 года в деревне Шубинка, ныне Калининского района Саратовской области. Работал в колхозе и трактористом машинно-тракторной станции. Служил в Красной армии в 1932–1935 годах, вновь призван в октябре 1941 года. На фронте был командиром отделения противотанковых ружей. В августе 1944 года под огнём противника переправлял через Вислу бойцов и боеприпасы, обеспечивая выполнение боевой задачи. В дальнейшем отличался в боях в Польше и Германии. Награждён тремя степенями ордена Славы; умер 7 июня 1988 года."
+  },
+  {
+    name: "Красичков Григорий Иванович",
+    bio: "Полный кавалер ордена Славы, уроженец Саратовского края. В годы Великой Отечественной войны служил в Красной армии и был награждён тремя степенями ордена Славы за боевые заслуги. В региональной Книге памяти Саратовской области опубликована отдельная биографическая карточка с данными о его службе, награждениях и судьбе. Для точного воспроизведения дат и конкретных эпизодов боевого пути следует свериться с карточкой и наградными документами."
+  },
+  {
+    name: "Кузнецов Василий Андреевич",
+    bio: "Полный кавалер ордена Славы, включённый в список уроженцев Саратовского края. Его биографическая карточка содержит сведения о месте рождения, службе, боевых эпизодах и награждении всеми тремя степенями ордена Славы. Для точных дат и подробностей необходима проверка персональной карточки."
+  },
+  {
+    name: "Куров Василий Иванович",
+    bio: "Полный кавалер ордена Славы из регионального списка саратовских земляков. В годы Великой Отечественной войны получил три степени ордена Славы за личное мужество и выполнение боевых задач. Подробные сведения о его жизненном пути и наградных эпизодах требуют дополнительной проверки по биографической карточке."
+  },
+  {
+    name: "Курышев Александр Васильевич",
+    bio: "Полный кавалер ордена Славы, связанный с Саратовским краем по региональному перечню. Его военная биография включает службу на фронте и награждение орденами Славы III, II и I степени. Точные даты, места боёв и сведения о послевоенной судьбе требуют сверки с персональной карточкой."
+  },
+  {
+    name: "Латухин Семён Филиппович",
+    bio: "Полный кавалер ордена Славы, включённый в перечень саратовских героев. Награждён всеми тремя степенями ордена Славы. Для подробной биографии, включая дату и место рождения, подразделение и послевоенную жизнь, необходима проверка персональной карточки."
+  },
+  {
+    name: "Лобанов Николай Степанович",
+    bio: "Полный кавалер ордена Славы, включённый в опубликованный список уроженцев Саратовского края. Прошёл военную службу в годы Великой Отечественной войны и получил три степени ордена Славы. Подробности боевого пути и биографические даты требуют сверки с персональной карточкой."
+  },
+  {
+    name: "Макаров Александр Денисович",
+    bio: "Полный кавалер ордена Славы из списка саратовских земляков. Его награды связаны с отличиями в боях Великой Отечественной войны. Для точных сведений о годах жизни, воинской специальности, подвигах и послевоенной судьбе требуется проверка персональной биографической карточки."
+  },
+  {
+    name: "Нижегородцев Тимофей Леонтьевич",
+    bio: "Полный кавалер ордена Славы, внесённый в региональный список. Был участником Великой Отечественной войны и получил все три степени ордена за боевые заслуги. Подробное описание его военного пути и наградных эпизодов требует сверки с персональной справкой."
+  },
+  {
+    name: "Никитин Геннадий Петрович",
+    bio: "Полный кавалер ордена Славы, включённый в региональный перечень уроженцев Саратовского края. Во время войны служил в боевой обстановке и был награждён орденами Славы трёх степеней. Даты и подробности службы необходимо проверить по биографической карточке."
+  },
+  {
+    name: "Новосельцев Михаил Григорьевич",
+    bio: "Полный кавалер ордена Славы, включённый в перечень саратовских земляков. Его биография связана с фронтовой службой в годы Великой Отечественной войны и награждением тремя степенями ордена Славы. Для более подробных сведений о жизни и боевых заслугах требуется обращение к персональной карточке."
+  },
+  {
+    name: "Осипов Кузьма Андреевич",
+    bio: "Родился 14 ноября 1916 года в деревне Новые Бегучи, ныне Петровского района Саратовской области. Служил механиком-водителем самоходной артиллерийской установки СУ-85 в самоходном артиллерийском полку. Отличился в боях на территории Украины и Польши, где экипаж участвовал в уничтожении техники и огневых точек противника. Был награждён тремя степенями ордена Славы. Умер 15 августа 2006 года."
+  },
+  {
+    name: "Пономарёв Иван Фёдорович",
+    bio: "Родился 14 ноября 1907 года в селе Гремячка, ныне Новобурасского района Саратовской области. Во время войны служил номером расчёта 76-мм пушки 87-го стрелкового полка. В боях на фронте отличался при поддержке пехоты и подавлении огневых точек противника. Получил ордена Славы III, II и I степени; после войны жил в Саратове. Умер 18 марта 1993 года."
+  },
+  {
+    name: "Пучков Григорий Сергеевич",
+    bio: "Полный кавалер ордена Славы, включённый в список саратовских земляков; в публикации Общественной палаты отмечена его связь с селом Озинки. Его награждение тремя степенями ордена связано с боевыми заслугами в годы Великой Отечественной войны. Подробные сведения о службе и биографии требуют сверки с персональной карточкой."
+  },
+  {
+    name: "Сергушев Василий Семёнович",
+    bio: "Полный кавалер ордена Славы, включённый в региональный список уроженцев Саратовского края. Прошёл фронтовую службу и получил все три степени ордена Славы. Точные биографические даты, сведения о подразделении и описание подвигов требуют проверки по персональной карточке."
+  },
+  {
+    name: "Серещенко Иван Васильевич",
+    bio: "Полный кавалер ордена Славы из перечня саратовских земляков. Был участником Великой Отечественной войны; за отличия в боях награждён тремя степенями ордена Славы. Дополнительные сведения о его жизни, воинской специальности и награждениях требуют проверки по биографической карточке."
+  },
+  {
+    name: "Скворцов Михаил Васильевич",
+    bio: "Полный кавалер ордена Славы, указанный в списке героев, связанных с Саратовским краем. Его фронтовые заслуги отмечены тремя степенями ордена Славы. Подробная биография с данными о годах жизни, службе и послевоенной судьбе требует сверки с персональной справкой."
+  },
+  {
+    name: "Соловьёв Иван Николаевич",
+    bio: "Полный кавалер ордена Славы, включённый в список уроженцев Саратовского края. Во время Великой Отечественной войны служил в Красной армии и был награждён орденами Славы всех трёх степеней. Подробности боевого пути и наград необходимо уточнить по биографической карточке."
+  },
+  {
+    name: "Тараскин Владимир Дмитриевич",
+    bio: "Полный кавалер ордена Славы из списка саратовских земляков. В годы Великой Отечественной войны проявил боевые заслуги, за которые был удостоен трёх степеней ордена Славы. Дату и место рождения, воинскую специальность, конкретные подвиги и послевоенную жизнь необходимо уточнить по персональной карточке."
+  }
+];
 
-    const isOpen = biography.classList.toggle("open");
-
-    button.textContent = isOpen
-        ? "Скрыть биографию"
-        : "Читать биографию";
-
-    button.setAttribute("aria-expanded", String(isOpen));
-}
-
-const searchInput = document.getElementById("search");
-const cards = Array.from(document.querySelectorAll(".hero-card"));
-const noResults = document.getElementById("noResults");
+const heroesContainer = document.getElementById("heroes");
+const search = document.getElementById("search");
 const count = document.getElementById("count");
 
-function searchHeroes() {
-    const query = searchInput.value
-        .trim()
-        .toLocaleLowerCase("ru");
+function createCard(hero, index) {
+  const card = document.createElement("article");
+  card.className = "hero-card";
+  card.dataset.search = (hero.name + " " + hero.bio).toLocaleLowerCase("ru");
 
-    let visible = 0;
+  const portraitWrap = document.createElement("div");
+  portraitWrap.className = "portrait-wrap";
 
-    cards.forEach(card => {
-        const text = (
-            card.dataset.search + " " + card.innerText
-        ).toLocaleLowerCase("ru");
+  const img = document.createElement("img");
+  img.className = "portrait";
+  img.alt = "Портрет: " + hero.name;
+  img.loading = "lazy";
 
-        const matches = text.includes(query);
+  const photoNote = document.createElement("div");
+  photoNote.className = "photo-note";
+  photoNote.textContent = "Поиск фотографии по ФИО";
 
-        card.style.display = matches ? "flex" : "none";
+  portraitWrap.append(img, photoNote);
 
-        if (matches) visible++;
-    });
+  const body = document.createElement("div");
+  body.className = "hero-body";
 
-    noResults.style.display = visible ? "none" : "block";
-    count.textContent = "Найдено героев: " + visible;
+  const number = document.createElement("span");
+  number.className = "number";
+  number.textContent = "Герой № " + (index + 1);
+
+  const title = document.createElement("h2");
+  title.textContent = hero.name;
+
+  const bio = document.createElement("p");
+  bio.textContent = hero.bio;
+
+  const status = document.createElement("p");
+  status.className = "photo-status";
+  status.textContent = "Идёт поиск фотографии. Если снимок не найден, биография остаётся доступной.";
+
+  body.append(number, title, bio, status);
+  card.append(portraitWrap, body);
+  heroesContainer.appendChild(card);
+
+  findPortrait(img, hero.name, photoNote, status, portraitWrap);
 }
 
-searchInput.addEventListener("input", searchHeroes);
-</script>
+async function findPortrait(img, person, note, status, wrap) {
+  try {
+    const api = "https://commons.wikimedia.org/w/api.php?action=query" +
+      "&generator=search&gsrnamespace=6&gsrlimit=10" +
+      "&gsrsearch=" + encodeURIComponent('"' + person.replace(/\s*\([^)]*\)/, "") + '"') +
+      "&prop=imageinfo&iiprop=url&iiurlwidth=480&format=json&origin=*";
 
+    const response = await fetch(api);
+    if (!response.ok) throw new Error("Не удалось выполнить поиск");
+
+    const data = await response.json();
+    const pages = Object.values(data.query?.pages || {});
+    const normalized = person.toLocaleLowerCase("ru")
+      .replace(/\s*\([^)]*\)/, "").replace(/ё/g, "е");
+
+    const match = pages.find(page => {
+      const title = (page.title || "").toLocaleLowerCase("ru").replace(/ё/g, "е");
+      return title.includes(normalized) && page.imageinfo && page.imageinfo[0];
+    });
+
+    if (!match) throw new Error("Точное совпадение не найдено");
+
+    img.src = match.imageinfo[0].thumburl || match.imageinfo[0].url;
+    note.textContent = "Изображение из Wikimedia Commons";
+    status.textContent = "Проверьте, что фотография изображает именно этого героя.";
+    img.onerror = () => {
+      img.remove();
+      wrap.innerHTML = "<div style='padding:24px;text-align:center;color:#655b4e'>Фотография недоступна.<br>Биография сохранена.</div>";
+      status.textContent = "Фотография не загрузилась.";
+    };
+  } catch (error) {
+    img.remove();
+    wrap.innerHTML = "<div style='padding:24px;text-align:center;color:#655b4e'>Портрет не найден автоматически.<br><small>Можно проверить персональную карточку героя в архиве.</small></div>";
+    status.textContent = "Фотография автоматически не найдена; биография доступна.";
+  }
+}
+
+heroes.forEach(createCard);
+
+search.addEventListener("input", () => {
+  const query = search.value.trim().toLocaleLowerCase("ru");
+  let visible = 0;
+
+  document.querySelectorAll(".hero-card").forEach(card => {
+    const matches = card.dataset.search.includes(query);
+    card.hidden = !matches;
+    if (matches) visible++;
+  });
+
+  count.textContent = visible + " из " + heroes.length + " биографий";
+});
+</script>
 </body>
 </html>
