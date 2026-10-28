@@ -27,6 +27,7 @@ button:hover,button[aria-pressed=true]{background:var(--ink);color:#fff}
 @keyframes fl{0%,100%{box-shadow:none}30%{box-shadow:0 0 0 4px var(--orange)}}
 .photo{flex:0 0 150px;background:#e4e4dd;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;color:var(--muted);font-size:.72rem;padding:8px;gap:6px}
 .photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo:has(img){padding:0}
 .photo b{font:700 2.4rem/1 Georgia,serif;color:#a7a79c}
 .text{padding:18px 20px;display:flex;flex-direction:column;min-width:0}
 .text h2{font:700 1.3rem/1.25 Georgia,"Times New Roman",serif;margin:0}
@@ -36,7 +37,11 @@ button:hover,button[aria-pressed=true]{background:var(--ink);color:#fff}
 .text p.bio.open{display:block}
 .more{border:0;background:none;padding:6px 0 0;color:var(--orange);text-decoration:underline;align-self:flex-start}
 .more:hover{background:none;color:var(--ink)}
-.text a{margin-top:auto;padding-top:10px;font-size:.82rem;color:var(--muted)}
+.more[hidden]{display:none}
+.src{margin-top:8px;font-size:.75rem;color:var(--muted)}
+.src:empty{display:none}
+.src a{color:inherit}
+.text .find{margin-top:auto;padding-top:10px;font-size:.82rem;color:var(--muted)}
 .empty{display:none;padding:26px;border:1px dashed #aaa;text-align:center;color:var(--muted);background:#fff}
 .empty.on{display:block}
 .quiz{margin-top:44px;padding:26px;background:#fff;border:1px solid var(--line);border-top:8px solid var(--ink);border-radius:3px}
@@ -53,7 +58,7 @@ button:hover,button[aria-pressed=true]{background:var(--ink);color:#fff}
 .pass{color:#2f7d3a}
 .fail{color:#b3261e}
 footer{padding-top:30px;padding-bottom:40px;color:var(--muted);font-size:.85rem}
-@media(max-width:560px){.card{flex-direction:column}.photo{flex:none;height:170px}header{padding-top:36px}}
+@media(max-width:560px){.card{flex-direction:column}.photo{flex:none;height:190px}header{padding-top:36px}}
 @media print{.toolbar,.ribbon,.quiz{display:none}.card{break-inside:avoid}}
 </style>
 </head>
@@ -79,12 +84,14 @@ footer{padding-top:30px;padding-bottom:40px;color:var(--muted);font-size:.85rem}
     <div id="qbox"></div>
   </section>
 </main>
-<footer>Исторический проект · Саратовская область</footer>
+<footer>Исторический проект · Саратовская область. Источники сведений: проект «Герои страны» (warheroes.ru), «Википедия» (текст по лицензии CC BY-SA), справочник «Кавалеры ордена Славы трёх степеней».</footer>
 
 <script>
-// photo: ссылка на проверенное фото; photoSource: страница-источник.
-// Пример: {n:"…",photo:"photos/baykin.jpg",photoSource:"https://…",b:"…"}
+// Для героев без собранных сведений страница при открытии сама ищет статью в «Википедии».
+// Статья принимается только при точном совпадении имени, упоминании ордена Славы и
+// связи с Саратовской областью (или совпадении года рождения). Иначе остаётся заглушка.
 const NO="Полный кавалер ордена Славы, уроженец Саратовского края; награждён тремя степенями ордена. Подробная биография уточняется.";
+const D=(b,d)=>`Родился ${b}. Умер ${d}. Полный кавалер ордена Славы. Сведения о боевом пути уточняются.`;
 const H=[
 ["Байкин Алексей Романович (1922–1997)","Родился 27 марта 1922 года в селе Репное, ныне Балашовского района. До войны работал в колхозе; в армии с декабря 1941 года, на фронте с января 1942-го. Командир миномётного расчёта 173-го стрелкового полка. Отличился при прорыве обороны в Карелии, в боях в Польше и Восточной Пруссии. После войны работал в колхозе и на предприятиях Балашова. Умер 30 марта 1997 года."],
 ["Безбородов Михаил Никифорович (1925–1993)","Родился 11 октября 1925 года в селе Сосновка, ныне Татищевского района. До призыва работал токарем в Саратове. В армии с июля 1943 года, на фронте с августа 1944-го; автоматчик гвардейского воздушно-десантного полка. Отличился в боях в Словакии и Польше. После войны жил в Саратове, работал монтажником. Умер 9 июня 1993 года."],
@@ -100,12 +107,13 @@ const H=[
 ["Казаков Василий Александрович","Родился 2 марта 1924 года в селе Богородское Вольского района. До войны работал в колхозе. В армии с 1942 года, командир артиллерийского расчёта. Участвовал в боях в Белоруссии, Польше и Германии. После демобилизации вернулся в родное село. Умер 8 сентября 2005 года."],
 ["Кликушин Александр Павлович","Родился 23 ноября 1918 года в селе Леляевка, ныне Новобурасского района. Работал трактористом, призван в 1940 году. Воевал с сентября 1942-го, артиллерист. Отличился в боях на Украине, на Висле и в Берлине. После войны работал в колхозе. Умер 6 декабря 1978 года."],
 ["Корольков Николай Петрович","Родился 4 апреля 1911 года в деревне Шубинка, ныне Калининского района. Работал в колхозе и трактористом. Вновь призван в октябре 1941 года; командир отделения противотанковых ружей. Отличился при переправе через Вислу и в боях в Польше и Германии. Умер 7 июня 1988 года."],
-["Красичков Григорий Иванович",NO],
+["Красичков Григорий Иванович (1924–1945)","Родился в 1924 году в селе Бобровка, ныне Петровского района. Русский, окончил начальную школу, работал в колхозе. Призван в апреле 1943 года; сапёр, затем командир отделения 556-го отдельного сапёрного батальона 281-й стрелковой дивизии. Воевал на Ленинградском фронте, участвовал в Новгородско-Лужской, Выборгской и Восточно-Прусской операциях, в боях за Эльбинг и Данциг. Орден Славы 3-й степени получил 17 июля 1944 года, 2-й степени 10 марта 1945 года, 1-й степени 15 мая 1946 года; награждён также двумя орденами Красной Звезды. Тяжело ранен 28 марта 1945 года под Данцигом, дальнейшая судьба не установлена: считается пропавшим без вести в апреле–мае 1945 года. В Петровске на Аллее Героев установлен бюст.",
+ {photo:"https://warheroes.ru/content/images/heroes/PKOS/Krasichkov_Grg_Ivn_pkos.jpg",photoSource:"https://warheroes.ru/hero/hero.asp?Hero_id=24334",photoLabel:"Фото: «Герои страны»"}],
 ["Кузнецов Василий Андреевич",NO],
-["Куров Василий Иванович",NO],
-["Курышев Александр Васильевич",NO],
-["Латухин Семён Филиппович",NO],
-["Лобанов Николай Степанович",NO],
+["Куров Василий Иванович (1915–1994)","Родился 16 ноября 1915 года в Новоузенске (ныне Саратовская область). Гвардии старший сержант, командир расчёта отдельной зенитно-пулемётной роты 47-й гвардейской стрелковой дивизии. Орден Славы 3-й степени получил 21 августа 1944 года, 2-й степени 17 марта 1945 года; затем получил 1-ю степень и стал полным кавалером ордена Славы. Умер 17 ноября 1994 года в Новоузенске."],
+["Курышев Александр Васильевич (1925–1970)",D("7 января 1925 года","2 октября 1970 года")],
+["Латухин Семён Филиппович (1904–1967)",D("1 июля 1904 года","3 августа 1967 года")],
+["Лобанов Николай Степанович (1908–1954)",D("25 января 1908 года","27 мая 1954 года")],
 ["Макаров Александр Денисович",NO],
 ["Нижегородцев Тимофей Леонтьевич",NO],
 ["Никитин Геннадий Петрович",NO],
@@ -118,40 +126,95 @@ const H=[
 ["Скворцов Михаил Васильевич",NO],
 ["Соловьёв Иван Николаевич",NO],
 ["Тараскин Владимир Дмитриевич",NO]
-].map(([n,b])=>({n,b}));
+].map(([n,b,x])=>({n,b,short:b.startsWith("Полный кавалер")||b.includes("уточняются"),...(x||{})}));
 
 const $=id=>document.getElementById(id);
 const grid=$("heroes"),search=$("search"),summary=$("summary"),empty=$("empty"),sortBtn=$("sort");
-const norm=s=>s.toLowerCase().replace(/ё/g,"е").replace(/\s+/g," ").trim();
+const norm=s=>s.toLowerCase().replace(/ё/g,"е").replace(/[^\p{L}\p{N}\s]/gu," ").replace(/\s+/g," ").trim();
 const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+const link=(txt,href,cls)=>{const a=el("a",cls||"",txt);a.href=href;a.target="_blank";a.rel="noopener noreferrer";return a};
 
 const cards=H.map((h,i)=>{
   const m=h.n.match(/^(.*?)\s*(?:\((.*)\))?$/),name=m[1],years=m[2]||"";
+  const y=(years.match(/\d{4}/)||[])[0];
   const c=el("article","card");c.dataset.s=norm(h.n+" "+h.b);
   const ph=el("div","photo");
-  if(h.photo){const im=el("img");im.src=h.photo;im.alt="Фотография: "+name;im.loading="lazy";ph.append(im)}
-  else{ph.append(el("b","",name[0]+(name.split(" ")[1]||" ")[0]),el("span","","Фотография пока не добавлена"))}
+  ph.append(el("b","",name[0]+(name.split(" ")[1]||" ")[0]),el("span","","Фотография пока не найдена"));
   const t=el("div","text");
   t.append(el("h2","",name));
   if(years)t.append(el("div","years",years));
   const p=el("p","bio",h.b);t.append(p);
-  if(h.b.length>=200){
-    const b=el("button","more","Читать полностью");
-    b.type="button";b.setAttribute("aria-expanded","false");
-    b.onclick=()=>{
-      const o=p.classList.toggle("open");
-      b.textContent=o?"Свернуть":"Читать полностью";
-      b.setAttribute("aria-expanded",o);
-    };
-    t.append(b);
-  }
-  const a=el("a","","Искать фото в Wikimedia Commons");
-  a.href=h.photoSource||"https://commons.wikimedia.org/wiki/Special:MediaSearch?type=image&search="+encodeURIComponent(name);
-  a.target="_blank";a.rel="noopener noreferrer";t.append(a);
+  const more=el("button","more","Читать полностью");
+  more.type="button";more.setAttribute("aria-expanded","false");more.hidden=h.b.length<200;
+  more.onclick=()=>{
+    const o=p.classList.toggle("open");
+    more.textContent=o?"Свернуть":"Читать полностью";
+    more.setAttribute("aria-expanded",o);
+  };
+  t.append(more);
+  const src=el("div","src");t.append(src);
+  const f=link("Искать фото в Wikimedia Commons","https://commons.wikimedia.org/wiki/Special:MediaSearch?type=image&search="+encodeURIComponent(name),"find");
+  t.append(f);
   c.append(ph,t);grid.append(c);
-  return{c,i,name};
+  return{c,i,name,y,h,p,more,src,ph};
 });
 
+// ---------- Фото и сведения из «Википедии» ----------
+const API="https://ru.wikipedia.org/w/api.php?origin=*&format=json&formatversion=2&";
+const getJ=async q=>{const c=new AbortController(),t=setTimeout(()=>c.abort(),9000);
+  try{const r=await fetch(API+new URLSearchParams(q),{signal:c.signal});if(!r.ok)throw 0;return await r.json()}finally{clearTimeout(t)}};
+const key=s=>norm(s).split(" ").sort().join(" ");
+const cut=s=>{s=s.replace(/\s+/g," ").trim();if(s.length<=900)return s;const k=s.lastIndexOf(". ",900);return s.slice(0,k>200?k+1:900)};
+
+async function wiki(x){
+  const s=await getJ({action:"query",list:"search",srsearch:'"'+x.name+'"',srlimit:"5",srnamespace:"0"});
+  for(const r of (s.query?.search||[])){
+    if(key(r.title)!==key(x.name))continue;
+    const d=await getJ({action:"query",prop:"extracts|pageimages",exintro:"1",explaintext:"1",piprop:"thumbnail",pithumbsize:"500",titles:r.title,redirects:"1"});
+    const p=d.query?.pages?.[0];if(!p||p.missing)continue;
+    const ex=p.extract||"";
+    if(!/Славы/.test(ex))continue;
+    if(!(/Саратов/.test(ex)||(x.y&&ex.includes(x.y))))continue;
+    return{ex,img:p.thumbnail?.source,title:p.title};
+  }
+}
+
+function setPhoto(x,srcUrl,page,label){
+  return new Promise(res=>{
+    const im=el("img");im.alt="Фотография: "+x.name;im.referrerPolicy="no-referrer";
+    im.onload=()=>{
+      x.ph.replaceChildren(im);
+      const s=el("span","",label+" · ");s.append(link("источник",page));
+      x.src.append(s);res(true);
+    };
+    im.onerror=()=>res(false);
+    im.src=srcUrl;
+  });
+}
+
+async function enrich(x){
+  let got=false;
+  if(x.h.photo)got=await setPhoto(x,x.h.photo,x.h.photoSource,x.h.photoLabel);
+  try{
+    const w=await wiki(x);
+    if(!w)return;
+    const page="https://ru.wikipedia.org/wiki/"+encodeURIComponent(w.title.replace(/ /g,"_"));
+    if(!got&&w.img)await setPhoto(x,w.img,page,"Фото: «Википедия»");
+    if(x.h.short&&w.ex){
+      x.p.textContent=cut(w.ex);
+      x.more.hidden=x.p.textContent.length<200;
+      x.c.dataset.s=norm(x.h.n+" "+x.p.textContent);
+      const s=el("span","","Текст: ");s.append(link("«Википедия»",page));
+      x.src.append(x.src.textContent?document.createTextNode(" · "):"",s);
+    }
+  }catch(e){}
+}
+const queue=[...cards];
+(async function worker(){while(queue.length){const x=queue.shift();await enrich(x)}})();
+(async function worker(){while(queue.length){const x=queue.shift();await enrich(x)}})();
+(async function worker(){while(queue.length){const x=queue.shift();await enrich(x)}})();
+
+// ---------- Поиск, сортировка, случайный герой ----------
 function update(){
   const q=norm(search.value);let v=0;
   cards.forEach(x=>{const ok=!q||x.c.dataset.s.includes(q);x.c.hidden=!ok;if(ok)v++});
@@ -197,80 +260,4 @@ const Q=[
 ["В каком городе родился М. С. Волков?",["В Балакове","В Вольске","В Хвалынске","В Энгельсе"]],
 ["Из какого орудия был наводчиком М. С. Волков?",["Из 45-мм противотанкового","Из 76-мм зенитного","Из 152-мм гаубицы","Из 37-мм зенитного"]],
 ["Кем служил на фронте П. И. Гурьянов?",["Санинструктором","Сапёром","Связистом","Разведчиком"]],
-["В каких городах жил после войны П. И. Гурьянов?",["В Волгограде и Волжском","В Саратове и Балакове","В Бресте и Минске","В Пензе и Тамбове"]],
-["В каких боях 1939 года участвовал А. Д. Доценко?",["На Халхин-Голе","На озере Хасан","На линии Маннергейма","В Западной Украине"]],
-["В каком городе работал на заводе Е. А. Иванов до войны?",["В Сталинграде","В Саратове","В Самаре","В Казани"]],
-["В каком районе родился В. А. Казаков (село Богородское)?",["Вольском","Балашовском","Калининском","Новобурасском"]],
-["Кем работал А. П. Кликушин до призыва в армию?",["Трактористом","Шахтёром","Токарем","Пекарем"]],
-["Через какую реку отличился при переправе Н. П. Корольков?",["Через Вислу","Через Волгу","Через Днепр","Через Дон"]],
-["На какой самоходной установке служил механиком-водителем К. А. Осипов?",["СУ-85","ИСУ-152","СУ-76","Т-34"]],
-["Из какого орудия был номером расчёта И. Ф. Пономарёв?",["Из 76-мм пушки","Из 45-мм пушки","Из миномёта","Из гаубицы"]],
-["С каким селом в региональных материалах связан Г. С. Пучков?",["С Озинками","С Репным","С Сосновкой","С Леляевкой"]]
-];
-
-const qbox=$("qbox");
-const shuf=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-let last=[];
-
-function intro(){
-  qbox.replaceChildren();
-  const b=el("button","","Начать тест");
-  b.type="button";b.onclick=start;
-  qbox.append(b);
-}
-
-function start(){
-  // сначала берём вопросы, которых не было в прошлом тесте
-  const fresh=shuf(Q.filter(x=>!last.includes(x)));
-  const old=shuf(Q.filter(x=>last.includes(x)));
-  const src=shuf([...fresh,...old].slice(0,15));
-  last=src;
-  const set=src.map(([q,o])=>({q,a:o[0],o:shuf(o)}));
-  let i=0,score=0;
-
-  const ask=()=>{
-    qbox.replaceChildren();
-    const s=set[i];
-    const bar=el("div","qbar"),fill=el("i");
-    fill.style.width=(i/15*100)+"%";
-    bar.append(fill);
-    qbox.append(el("p","",`Вопрос ${i+1} из 15`),bar,el("h3","",s.q));
-    const next=el("button","",i<14?"Следующий вопрос":"Показать результат");
-    next.type="button";next.hidden=true;next.style.marginTop="12px";
-    next.onclick=()=>{i++;i<15?ask():finish()};
-    s.o.forEach(t=>{
-      const b=el("button","opt",t);
-      b.type="button";
-      b.onclick=()=>{
-        if(t===s.a)score++;
-        qbox.querySelectorAll(".opt").forEach(x=>{
-          x.disabled=true;
-          if(x.textContent===s.a)x.classList.add("ok");
-          else if(x===b)x.classList.add("bad");
-        });
-        next.hidden=false;next.focus();
-      };
-      qbox.append(b);
-    });
-    qbox.append(next);
-  };
-
-  const finish=()=>{
-    qbox.replaceChildren();
-    const ok=score>=10;
-    const again=el("button","","Новый тест с другими вопросами");
-    again.type="button";again.onclick=start;
-    qbox.append(
-      el("p","res "+(ok?"pass":"fail"),ok?"Тест пройден":"Тест не пройден"),
-      el("p","",`Правильных ответов: ${score} из 15. Чтобы пройти тест, нужно не менее 10.`),
-      again
-    );
-    again.focus();
-  };
-
-  ask();
-}
-intro();
-</script>
-</body>
-</html>
+["В каких городах жил после войны П. И. Гурьянов?",["В Волгограде и Волжском","В Саратове и Балакове","В Бресте и Минске","В Пензе и
